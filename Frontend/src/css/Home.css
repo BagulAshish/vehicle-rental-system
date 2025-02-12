@@ -1,0 +1,31 @@
+.home-container {
+    background: url('../images/ai-generated-8158903_1280.webp') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .landing-image {
+    width: 300px;
+    height: auto;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .landing-image:hover {
+    transform: scale(1.1);
+  }
+  
+  .OwnerHome {
+    background: url('../images/1384291.png') no-repeat center;
+    height: 900px;
+    width: 100%;
+    margin-left: -15px;
+    padding: 0 auto;
+    box-sizing: border-box;
+    
+  }
