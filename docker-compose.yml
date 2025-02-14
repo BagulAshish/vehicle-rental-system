@@ -1,0 +1,52 @@
+services:
+  mysql:
+    image: mysql:8.0  
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: vehiclerental
+      MYSQL_USER: D4_87214_Ashish
+      MYSQL_PASSWORD: manager
+    ports:
+      - "3307:3306"  
+    networks:
+      - my-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+  spring_boot:
+    image: backend-image  
+    build:
+      context: ./demo  
+    ports:
+      - "8080:8080"  
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/vehiclerental?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=D4_87214_Ashish
+      - SPRING_DATASOURCE_PASSWORD=manager
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQLDialect
+      - SPRING_JPA_OPEN_IN_VIEW=false
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - my-network
+
+  
+  react:
+    image: frontend-image  
+    build:
+      context: ./frontend2/pr2  
+    ports:
+      - "5000:3000"  
+    networks:
+      - my-network
+    depends_on:
+      - spring_boot  
+
+networks:
+  my-network:  
